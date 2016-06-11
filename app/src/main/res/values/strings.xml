@@ -9,4 +9,13 @@
     <string name="desc2">Make international transactions on Google Play store, App store, Airbnb, Netflix and more</string>
     <string name="desc3">No annual fee, No late fee, No hidden fee</string>
     <string name="start">START</string>
+
+    <!--Register screen related-->
+    <string name="name_hint_text">Full Name</string>
+    <string name="email_hint_text">Email Address</string>
+    <string name="phone_hint_text">Mobile Number</string>
+    <string name="proceed">PROCEED</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="invalid_phone">Invalid phone number</string>
+
 </resources>

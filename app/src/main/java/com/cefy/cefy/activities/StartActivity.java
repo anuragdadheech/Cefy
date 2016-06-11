@@ -1,10 +1,9 @@
-package com.cefy.cefy;
+package com.cefy.cefy.activities;
 
 import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +18,9 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Switch;
+
+import com.cefy.cefy.R;
+import com.cefy.cefy.fragments.StartFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,8 +90,9 @@ public class StartActivity extends AppCompatActivity {
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(StartActivity.this, MainActivity.class);
+                Intent i = new Intent(StartActivity.this, RegisterActivity.class);
                 startActivity(i);
+                overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_out);
             }
         });
         nextBtn.setOnClickListener(new View.OnClickListener() {
@@ -193,4 +195,5 @@ public class StartActivity extends AppCompatActivity {
         viewPager.beginFakeDrag();
         animator.start();
     }
+
 }

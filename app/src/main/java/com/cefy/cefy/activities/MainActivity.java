@@ -1,9 +1,10 @@
-package com.cefy.cefy;
+package com.cefy.cefy.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.cefy.cefy.R;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -18,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setUpFirebase();
+    }
+
+    private void setUpFirebase() {
         Firebase.setAndroidContext(this);
         Firebase myFirebaseRef = new Firebase("https://dazzling-fire-8056.firebaseio.com/");
         myFirebaseRef.child("message").setValue("Do you have data? You'll love Firebase.");

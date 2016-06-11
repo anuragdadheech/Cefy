@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:material="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,12 +8,71 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.cefy.cefy.RegisterActivity">
+    android:background="@color/blue"
+    tools:context=".activities.RegisterActivity">
 
     <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|top"
         android:src="@drawable/ic_cefy_logo"/>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_below="@+id/iv_logo"
+        android:id="@+id/register_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="20dp"
+        android:hint="@string/name_hint_text"
+        android:inputType="textCapSentences"
+        style="@style/DefaultMaterialEditText"
+        material:met_maxCharacters="35" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_below="@+id/register_name"
+        android:id="@+id/register_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="20dp"
+        android:hint="@string/phone_hint_text"
+        android:inputType="textCapSentences"
+        style="@style/DefaultMaterialEditText" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_below="@+id/register_phone"
+        android:id="@+id/register_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="20dp"
+        android:hint="@string/email_hint_text"
+        android:inputType="textCapSentences"
+        style="@style/DefaultMaterialEditText" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register_email"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@color/dark_blue">
+        <Button
+            android:id="@+id/btn_proceed"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/proceed"
+            android:textColor="@android:color/white"
+            style="@style/Widget.AppCompat.Button.Colored"/>
+    </FrameLayout>
 
 </RelativeLayout>

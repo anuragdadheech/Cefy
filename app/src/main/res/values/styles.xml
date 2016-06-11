@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -16,5 +16,13 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="DefaultMaterialEditText">
+        <item name="met_baseColor">@color/white</item>
+        <item name="met_primaryColor">@color/white</item>
+        <item name="met_floatingLabel">highlight</item>
+        <item name="met_errorColor">@color/red</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
 
 </resources>
