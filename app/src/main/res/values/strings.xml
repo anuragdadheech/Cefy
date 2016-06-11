@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Cefy</string>
+    <string name="title_activity_start">StartActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!--Start screen related-->
+    <string name="desc1">Beta sign up for credit card</string>
+    <string name="desc2">Make international transactions on Google Play store, App store, Airbnb, Netflix and more</string>
+    <string name="desc3">No annual fee, No late fee, No hidden fee</string>
+    <string name="start">START</string>
+</resources>
