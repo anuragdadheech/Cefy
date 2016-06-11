@@ -3,10 +3,158 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activities.MainActivity">
+
+    <TextView
+        android:id="@+id/info_text"
+        android:layout_margin="20dp"
+        android:typeface="sans"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/info_text"/>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/info_text"
+        android:id="@+id/checklist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/fb_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/fb_image"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_facebook"/>
+
+            <TextView
+                android:id="@+id/fb_text"
+                android:layout_weight="6"
+                android:layout_width="0dp"
+                android:text="@string/fb_text"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/fb_check"
+                android:src="@drawable/ic_check_white_24dp"
+                android:tint="@color/grey"
+                android:layout_weight="1.2"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/fb_cross"
+                android:src="@drawable/ic_close_white_24dp"
+                android:tint="@color/red"
+                android:layout_gravity="center"
+                android:layout_weight="1.2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/in_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/in_image"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_linkedin"/>
+
+            <TextView
+                android:id="@+id/in_text"
+                android:layout_weight="6"
+                android:text="@string/in_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/in_check"
+                android:src="@drawable/ic_check_white_24dp"
+                android:tint="@color/grey"
+                android:layout_gravity="center"
+                android:layout_weight="1.2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/in_cross"
+                android:src="@drawable/ic_close_white_24dp"
+                android:tint="@color/red"
+                android:layout_gravity="center"
+                android:layout_weight="1.2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/sms_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/sms_image"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_mail"/>
+
+            <TextView
+                android:id="@+id/sms_text"
+                android:layout_weight="6"
+                android:text="@string/sms_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/sms_check"
+                android:src="@drawable/ic_check_white_24dp"
+                android:tint="@color/grey"
+                android:layout_gravity="center"
+                android:layout_weight="1.2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/sms_cross"
+                android:src="@drawable/ic_close_white_24dp"
+                android:tint="@color/red"
+                android:layout_gravity="center"
+                android:layout_weight="1.2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/toolbar"/>
 
 </RelativeLayout>

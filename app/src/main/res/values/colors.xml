@@ -9,6 +9,7 @@
     <color name="blue">#0086c1</color>
     <color name="dark_blue">#0078ad</color>
     <color name="red">#ff5d5b</color>
+    <color name="grey">#d3d3d3</color>
     <color name="white">#ffffff</color>
     <color name="indicator_unselected">#404040</color>
     <color name="black_80">#14000000</color>

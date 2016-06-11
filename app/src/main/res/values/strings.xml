@@ -18,4 +18,13 @@
     <string name="invalid_email">Invalid email</string>
     <string name="invalid_phone">Invalid phone number</string>
 
+    <!--main screen related-->
+    <string name="info_text">We analyze your transactional and promotional SMS, Facebook and Linkedin profiles to issue you a Credit Card. Kindly go through the steps below to give us required access: </string>
+    <string name="facebook_app_id">1706204626317412</string>
+    <string name="fb_login_protocol_scheme">fb1706204626317412</string>
+    <string name="fb_text">Login with Facebook and allow permissions for friend list, email and public profile</string>
+    <string name="fb_error_text">Kindly login again with all permissions</string>
+    <string name="in_text">Login with LinkedIn to give us your work history</string>
+    <string name="sms_text">Allow us to read your promotional and transactional messages</string>
+
 </resources>

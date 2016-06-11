@@ -11,5 +11,7 @@ public class User implements Serializable {
     public String mobile;
     public String token;
     public String smsData;
+    public String fbData;
+    public String inData;
 
 }
