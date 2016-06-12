@@ -5,9 +5,22 @@ package com.cefy.cefy;
  */
 public class Constants {
     public interface General {
-        String MY_PREFS_NAME = "com.cefy.android";
         String USER_DATA = "user_data";
-        String USER_PROFILE = "user_profile";
-        String USER_FRIENDS = "user_friends";
+        String FB_USER_PROFILE = "fb_user_profile";
+        String FB_USER_FRIENDS = "fb_user_friends";
+        String LINKEDIN_DATA = "linkedin_data";
+    }
+
+    public interface SharedPrefs {
+        String MY_PREFS_NAME = "com.cefy.android";
+        String LINKEDIN_EXPIRES = "linkedin_expires";
+        String LINKEDIN_ACCESS_TOKEN = "linkedin_token";
+    }
+
+    public interface IntentExtras {
+        String LINKEDIN_ACCESS_TOKEN = "linkedin_access_token";
+        String LINKEDIN_STATUS = "linkedin_status";
+        int REQUEST_LINKEDIN_LOGIN = 100;
+        int RESULT_LINKEDIN_LOGIN = 101;
     }
 }
