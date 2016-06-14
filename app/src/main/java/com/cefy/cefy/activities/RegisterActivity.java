@@ -32,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean isEmailValid = email.validateWith(new RegexpValidator(getString(R.string.invalid_email), ".+@.+\\.[a-z]+"));
                 boolean isPhoneValid = phone.validateWith(new RegexpValidator(getString(R.string.invalid_phone), "^\\d{10}$"));
-//                if (isEmailValid && isPhoneValid) {
+                if (isEmailValid && isPhoneValid) {
                     User user = new User();
                     user.name = name.getText().toString().trim();
                     user.email = email.getText().toString().trim();
@@ -43,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
                     i.putExtras(bundle);
                     startActivity(i);
                     overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_out);
-//                }
+                }
             }
         });
     }

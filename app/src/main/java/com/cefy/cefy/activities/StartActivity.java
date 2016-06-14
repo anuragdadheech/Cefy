@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +25,7 @@ import com.cefy.cefy.fragments.StartFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Anurag
@@ -38,6 +40,8 @@ public class StartActivity extends AppCompatActivity {
 
     @BindView(R.id.container) ViewPager viewPager;
     @BindView(R.id.intro_btn_finish) Button finishBtn;
+    @BindView(R.id.btn_terms) Button termsBtn;
+    @BindView(R.id.btn_privacy) Button privacyBtn;
     @BindView(R.id.intro_btn_next) ImageButton nextBtn;
     @BindView(R.id.intro_indicator_0) ImageView indicator0;
     @BindView(R.id.intro_indicator_1) ImageView indicator1;
@@ -194,6 +198,22 @@ public class StartActivity extends AppCompatActivity {
         animator.setDuration(PAGER_TRANSITION_DURATION_MS);
         viewPager.beginFakeDrag();
         animator.start();
+    }
+
+    @OnClick(R.id.btn_terms)
+    public void openTermsOfUse(View view) {
+        openURL("http://cefy.in/tos");
+    }
+
+    @OnClick(R.id.btn_privacy)
+    public void openPrivacyPolicy(View view) {
+        openURL("http://cefy.in/privacy");
+    }
+
+    private void openURL(String url) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 
 }

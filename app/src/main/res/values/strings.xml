@@ -9,6 +9,8 @@
     <string name="desc2">Make international transactions on Google Play store, App store, Airbnb, Netflix and more</string>
     <string name="desc3">No annual fee, No late fee, No hidden fee</string>
     <string name="start">START</string>
+    <string name="terms">Terms</string>
+    <string name="privacy">Privacy Policy</string>
 
     <!--Register screen related-->
     <string name="name_hint_text">Full Name</string>
@@ -24,6 +26,7 @@
     <string name="fb_login_protocol_scheme">fb1706204626317412</string>
     <string name="fb_text">Login with Facebook and allow permissions for friend list, email and public profile</string>
     <string name="fb_error_text">Kindly login again with all permissions</string>
+    <string name="sms_error_text">Kindly provide sms permissions from app settings</string>
     <string name="in_text">Login with LinkedIn to give us your work history</string>
     <string name="sms_text">Allow us to read your promotional and transactional messages</string>
 

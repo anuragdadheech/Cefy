@@ -9,6 +9,7 @@ public class Constants {
         String FB_USER_PROFILE = "fb_user_profile";
         String FB_USER_FRIENDS = "fb_user_friends";
         String LINKEDIN_DATA = "linkedin_data";
+        String SMS_DATA = "sms_data";
     }
 
     public interface SharedPrefs {
@@ -22,5 +23,6 @@ public class Constants {
         String LINKEDIN_STATUS = "linkedin_status";
         int REQUEST_LINKEDIN_LOGIN = 100;
         int RESULT_LINKEDIN_LOGIN = 101;
+        int REQUEST_READ_SMS = 120;
     }
 }

@@ -1,12 +1,21 @@
 package com.cefy.cefy.activities;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,13 +23,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cefy.cefy.Constants;
 import com.cefy.cefy.R;
 import com.cefy.cefy.models.FBFriends;
 import com.cefy.cefy.models.FBUser;
 import com.cefy.cefy.models.LinkedInUser;
+import com.cefy.cefy.models.SMSData;
 import com.cefy.cefy.models.User;
 import com.cefy.cefy.network.LinkedInService;
 import com.facebook.AccessToken;
@@ -36,7 +45,6 @@ import com.facebook.login.LoginResult;
 import com.firebase.client.Firebase;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.LISessionManager;
 import com.linkedin.platform.errors.LIApiError;
@@ -50,7 +58,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -62,7 +73,7 @@ import retrofit2.Response;
 /**
  * @author Anurag
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.checklist) LinearLayout checkList;
@@ -122,7 +133,8 @@ public class MainActivity extends AppCompatActivity {
         User user = (User) getIntent().getSerializableExtra(Constants.General.USER_DATA);
         Firebase.setAndroidContext(this);
         if (null != user && StringUtils.isNotEmpty(user.email)) {
-            firebase = new Firebase("https://dazzling-fire-8056.firebaseio.com/android/data/users/" + user.email.replace(".", "(dot)"));
+            firebase = new Firebase("https://cefyapp.firebaseIO.com/android/data/users/" + user.email.replace(".", "(dot)"));
+            saveToFirebase(Constants.General.USER_DATA, user);
         }
     }
 
@@ -141,6 +153,16 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Intent i = new Intent(MainActivity.this, LinkedInWebviewActivity.class);
                     startActivityForResult(i, Constants.IntentExtras.REQUEST_LINKEDIN_LOGIN);
+                }
+            }
+        });
+        smsContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    checkForSmsPermissions();
+                } else {
+                    getSupportLoaderManager().initLoader(1, null, MainActivity.this);
                 }
             }
         });
@@ -189,11 +211,11 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(FacebookException exception) {
-                    Log.d("fb:data", "Errored");
+                    Log.d("fb:data", exception.toString());
                 }
             });
         LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, Arrays.asList(
-                "public_profile","email","user_friends"));
+                "public_profile", "email", "user_friends"));
     }
 
     @Override
@@ -208,11 +230,9 @@ public class MainActivity extends AppCompatActivity {
             if(data.getBooleanExtra(Constants.IntentExtras.LINKEDIN_STATUS, false)) {
                 String accessToken = data.getStringExtra(Constants.IntentExtras.LINKEDIN_ACCESS_TOKEN);
                 LinkedInService linkedInService = new LinkedInService();
-                final Gson gson = new GsonBuilder().create();
                 linkedInService.loadLinkedInProfile("Bearer " + accessToken, new Callback<LinkedInUser>() {
                     @Override
                     public void onResponse(Call<LinkedInUser> call, Response<LinkedInUser> response) {
-//                        LinkedInUser linkedInUser = gson.fromJson(response.body(), LinkedInUser.class);
                         saveToFirebase(Constants.General.LINKEDIN_DATA, response.body());
                         setCompleted(inCheck);
                     }
@@ -311,5 +331,83 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("in:data:api", "failure");
             }
         });
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        final String SMS_ALL = "content://sms/";
+        Uri uri = Uri.parse(SMS_ALL);
+        String[] projection = new String[]{"_id", "thread_id", "address", "person", "body", "date", "type"};
+        return new CursorLoader(this, uri, projection, null, null, "date desc");
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        List<SMSData> smsList = new ArrayList<>();
+        try {
+            if (null != cursor) {
+                while (cursor.moveToNext()) {
+                    String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
+                    int type = cursor.getInt(cursor.getColumnIndexOrThrow("type"));
+                    if ((type != 3) && (address.length()>=1)) {
+                        String id = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
+                        String smsContent = cursor.getString(cursor.getColumnIndexOrThrow("body"));
+                        Date date = new Date(Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow("date"))));
+                        SMSData sms = new SMSData(id, address, smsContent, type, date);
+                        smsList.add(sms);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e("SMS loading issue: ", e.getMessage());
+        }
+        if(smsList.size() > 0) {
+            saveToFirebase(Constants.General.SMS_DATA, smsList);
+        }
+        setCompleted(smsCheck);
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {}
+
+    private void checkForSmsPermissions() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_SMS)) {
+                //no need for showing rationale
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_SMS},
+                        Constants.IntentExtras.REQUEST_READ_SMS);
+            }
+        } else {
+            getSupportLoaderManager().initLoader(1, null, MainActivity.this);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case Constants.IntentExtras.REQUEST_READ_SMS: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getSupportLoaderManager().initLoader(1, null, MainActivity.this);
+                    smsCheck.setVisibility(View.VISIBLE);
+                    smsCross.setVisibility(View.GONE);
+                    smsText.setText(getString(R.string.sms_text));
+
+                } else {
+                    smsCheck.setVisibility(View.GONE);
+                    smsCross.setVisibility(View.VISIBLE);
+                    smsText.setText(getString(R.string.sms_error_text));
+                }
+                return;
+            }
+        }
     }
 }
