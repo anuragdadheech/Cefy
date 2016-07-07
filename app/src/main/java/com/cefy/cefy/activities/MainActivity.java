@@ -274,9 +274,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     public void onCompleted(
                             JSONArray jsonArray,
                             GraphResponse response) {
-                        String resp = response.getRawResponse();
-                        FBFriends fbFriends = gson.fromJson(resp, FBFriends.class);
-                        saveToFirebase(Constants.General.FB_USER_FRIENDS, fbFriends);
+
+                        try {
+                            String resp = response.getRawResponse();
+                            FBFriends fbFriends = gson.fromJson(resp, FBFriends.class);
+                            saveToFirebase(Constants.General.FB_USER_FRIENDS, fbFriends);
+                        } catch (Exception e) {
+                            //TODO: Try and find out the exact fb error
+                        }
                         //Friends list wont work:
                         //http://stackoverflow.com/questions/23850807/get-all-user-friends-using-facebook-graph-api-android
                     }

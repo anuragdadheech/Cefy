@@ -170,8 +170,10 @@ public class StartActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                viewPager.endFakeDrag();
-                page += 1;
+                if (viewPager.isFakeDragging() || viewPager.beginFakeDrag()) {
+                    viewPager.endFakeDrag();
+                    page += 1;
+                }
             }
 
             @Override
@@ -194,7 +196,9 @@ public class StartActivity extends AppCompatActivity {
                 int dragPosition = (Integer) animation.getAnimatedValue();
                 int dragOffset = dragPosition - oldDragPosition;
                 oldDragPosition = dragPosition;
-                viewPager.fakeDragBy(dragOffset * (forward ? -1 : 1));
+                if (viewPager.isFakeDragging() || viewPager.beginFakeDrag()) {
+                    viewPager.fakeDragBy(dragOffset * (forward ? -1 : 1));
+                }
             }
         });
 
